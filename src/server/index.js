@@ -4,6 +4,9 @@ import path from "path";
 import registrationRoutes from "./routes/registration.js";
 
 const port = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === "production";
+const staticPath = isProduction ? "dist" : "src/client";
+const publicPath = path.resolve("public");
 
 const app = express();
 
@@ -13,8 +16,11 @@ app.get("/", (req, res) => {
 });
 
 // serve the static files
-app.use("/", express.static(path.resolve("public")));
-app.use("/src/client", express.static(path.resolve("src/client")));
+app.use(
+  "/",
+  express.static(isProduction ? path.resolve(staticPath) : publicPath)
+);
+app.use("/src/client", express.static(path.resolve(staticPath)));
 
 app.use(registrationRoutes);
 
