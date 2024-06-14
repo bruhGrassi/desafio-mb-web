@@ -1,19 +1,59 @@
 <script setup>
-import { reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import Button from "@/components/Button.vue";
 import Header from "@/components/Header.vue";
+import Welcome from "@/views/Welcome.vue";
+import EntityInfo from "@/views/EntityInfo.vue";
+import Password from "@/views/Password.vue";
 import Review from "@/views/Review.vue";
 
+const currentStep = ref(0);
 const entity = reactive({});
 const errors = reactive({});
+
+const entityTitle = computed(
+  () => `Pessoa ${entity.type === "PJ" ? "Jurídica" : "Física"}`
+);
+
+const steps = [
+  {
+    title: "Seja bem vindo(a)",
+    component: Welcome,
+    requiredFields: ["email", "type"],
+  },
+  {
+    component: EntityInfo,
+    requiredFields: ["name", "document", "birth_date", "phone"],
+  },
+  {
+    title: "Senha de acesso",
+    component: Password,
+    requiredFields: ["password"],
+  },
+  {
+    title: "Revise suas informações",
+    component: Review,
+    requiredFields: [
+      "email",
+      "name",
+      "document",
+      "birth_date",
+      "phone",
+      "password",
+    ],
+  },
+];
 </script>
 
 <template>
   <div class="app__wrapper">
     <form>
-      <Header title="Seja Bem vindo(a)" :actualStep="1" :numOfSteps="4" />
-
-      <Review :entity :errors />
+      <Header
+        :title="steps[currentStep].title || entityTitle"
+        :actualStep="currentStep + 1"
+        :numOfSteps="steps.length"
+      />
+      <component :is="steps[currentStep].component" :entity :errors />
 
       <div class="app__actions">
         <Button type="button" text="Voltar" :isOutline="true" />
