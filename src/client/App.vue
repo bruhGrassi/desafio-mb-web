@@ -108,8 +108,8 @@ const submit = async () => {
 const goBack = () => {
   isRegistered.value = false;
   currentStep.value = 0;
-  entity = reactive({});
-  errors = reactive({});
+  Object.assign(entity, {});
+  Object.assign(errors, {});
 };
 </script>
 
