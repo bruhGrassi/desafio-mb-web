@@ -7,12 +7,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-const emits = defineEmits(["clicked"]);
-
-const goBack = () => {
-  emits("clicked");
-};
 </script>
 
 <template>
@@ -37,7 +31,9 @@ const goBack = () => {
       />
     </svg>
     <p class="message__text">{{ text }}</p>
-    <Button type="button" text="Ir para página inicial" @click="goBack" />
+    <a href="/registration">
+      <Button type="button" text="Ir para página inicial" />
+    </a>
   </div>
 </template>
 

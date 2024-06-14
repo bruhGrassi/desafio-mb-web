@@ -104,22 +104,12 @@ const submit = async () => {
   isSubmitting.value = false;
   isSuccess.value = true;
 };
-
-const goBack = () => {
-  isSuccess.value = false;
-  currentStep.value = 0;
-  Object.assign(entity, {});
-  Object.assign(errors, {});
-};
 </script>
 
 <template>
   <div class="app__wrapper">
     <div v-if="isSuccess">
-      <Message
-        text="Seu cadastro foi realizado com sucesso!"
-        @clicked="goBack"
-      />
+      <Message text="Seu cadastro foi realizado com sucesso!" />
     </div>
 
     <form v-else>
