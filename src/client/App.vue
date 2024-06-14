@@ -55,6 +55,10 @@ const previousStep = () => {
     currentStep.value--;
   }
 };
+
+const submit = () => {
+  console.log("submit");
+};
 </script>
 
 <template>
@@ -73,9 +77,18 @@ const previousStep = () => {
           text="Voltar"
           :isOutline="true"
           @click="previousStep"
+          v-if="currentStep > 0"
         />
         <Button
           type="button"
+          v-if="currentStep === steps.length - 1"
+          text="Cadastrar"
+          :isOutline="false"
+          @click="submit"
+        />
+        <Button
+          type="button"
+          v-else
           text="Continuar"
           :isOutline="false"
           @click="nextStep"
