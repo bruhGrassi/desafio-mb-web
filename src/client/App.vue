@@ -12,7 +12,7 @@ const entity = reactive({});
 const errors = reactive({});
 
 const entityTitle = computed(
-  () => `Pessoa ${entity.type === "PJ" ? "Jurídica" : "Física"}`
+  () => `Pessoa ${entity.type === "PF" ? "Física" : "Jurídica"}`
 );
 
 const steps = [
@@ -43,6 +43,18 @@ const steps = [
     ],
   },
 ];
+
+const nextStep = () => {
+  if (currentStep.value < steps.length - 1) {
+    currentStep.value++;
+  }
+};
+
+const previousStep = () => {
+  if (currentStep.value > 0) {
+    currentStep.value--;
+  }
+};
 </script>
 
 <template>
@@ -56,8 +68,18 @@ const steps = [
       <component :is="steps[currentStep].component" :entity :errors />
 
       <div class="app__actions">
-        <Button type="button" text="Voltar" :isOutline="true" />
-        <Button type="button" text="Continuar" :isOutline="false" />
+        <Button
+          type="button"
+          text="Voltar"
+          :isOutline="true"
+          @click="previousStep"
+        />
+        <Button
+          type="button"
+          text="Continuar"
+          :isOutline="false"
+          @click="nextStep"
+        />
       </div>
     </form>
   </div>
