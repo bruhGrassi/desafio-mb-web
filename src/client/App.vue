@@ -2,7 +2,7 @@
 import { reactive } from "vue";
 import Button from "@/components/Button.vue";
 import Header from "@/components/Header.vue";
-import Password from "@/views/Password.vue";
+import Review from "@/views/Review.vue";
 
 const entity = reactive({});
 const errors = reactive({});
@@ -13,7 +13,7 @@ const errors = reactive({});
     <form>
       <Header title="Seja Bem vindo(a)" :actualStep="1" :numOfSteps="4" />
 
-      <Password :entity :errors />
+      <Review :entity :errors />
 
       <div class="app__actions">
         <Button type="button" text="Voltar" :isOutline="true" />
