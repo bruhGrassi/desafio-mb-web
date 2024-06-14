@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 
 import registrationRoutes from "./routes/registration.js";
 
@@ -10,6 +11,10 @@ const app = express();
 app.get("/", (req, res) => {
   res.redirect("registration");
 });
+
+// serve the static files
+app.use("/", express.static(path.resolve("public")));
+app.use("/src/client", express.static(path.resolve("src/client")));
 
 app.use(registrationRoutes);
 
