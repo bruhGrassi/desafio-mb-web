@@ -13,4 +13,9 @@ router.get("/registration", async (_req, res) => {
   }
 });
 
+router.post("/registration", (req, res) => {
+  console.log(req.body);
+  res.status(200).send({ message: "Cadastro com sucesso!", data: req.body });
+});
+
 export default router;
