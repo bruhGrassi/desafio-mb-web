@@ -2,7 +2,7 @@
 import { reactive } from "vue";
 import Button from "@/components/Button.vue";
 import Header from "@/components/Header.vue";
-import Welcome from "@/views/Welcome.vue";
+import EntityInfo from "@/views/EntityInfo.vue";
 
 const entity = reactive({});
 const errors = reactive({});
@@ -13,7 +13,7 @@ const errors = reactive({});
     <form>
       <Header title="Seja Bem vindo(a)" :actualStep="1" :numOfSteps="4" />
 
-      <Welcome :entity :errors />
+      <EntityInfo :entity :errors />
 
       <div class="app__actions">
         <Button type="button" text="Voltar" :isOutline="true" />
