@@ -9,6 +9,7 @@ const staticPath = isProduction ? "dist" : "src/client";
 const publicPath = path.resolve("public");
 
 const app = express();
+app.use(express.json());
 
 // redirect directly to the registration page
 app.get("/", (req, res) => {
