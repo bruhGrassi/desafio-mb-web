@@ -1,16 +1,41 @@
 <script setup>
+import { reactive } from "vue";
 import Button from "@/components/Button.vue";
 import Header from "@/components/Header.vue";
-import InputField from "@/components/InputField.vue";
-import InputGroup from "@/components/InputGroup.vue";
-import Message from "@/components/Message.vue";
+import Welcome from "@/views/Welcome.vue";
+
+const entity = reactive({});
+const errors = reactive({});
 </script>
 
 <template>
-  <Header title="Seja bem vindo(a)" :actualStep="1" :numOfSteps="4" />
-  <Button text="Continuar" :isOutline="false" />
-  <InputField id="name" label="Nome" type="text" />
-  <InputField id="name" label="Nome" type="text" error="Preencha o Nome" />
-  <InputGroup error="Escolha um dos itens" />
-  <Message text="Registrado com sucesso!" />
+  <div class="app__wrapper">
+    <form>
+      <Header title="Seja Bem vindo(a)" :actualStep="1" :numOfSteps="4" />
+
+      <Welcome :entity :errors />
+
+      <div class="app__actions">
+        <Button type="button" text="Voltar" :isOutline="true" />
+        <Button type="button" text="Continuar" :isOutline="false" />
+      </div>
+    </form>
+  </div>
 </template>
+
+<style lang="scss">
+.app {
+  &__wrapper {
+    max-width: 31.25rem;
+    margin: 0 auto;
+    padding: $size-md $size-normal;
+  }
+
+  &__actions {
+    width: 100%;
+    @include flex-center-start;
+    gap: $size-normal;
+    padding-top: $size-xs;
+  }
+}
+</style>

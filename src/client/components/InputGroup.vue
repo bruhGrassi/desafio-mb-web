@@ -32,6 +32,7 @@ const props = defineProps({
   width: 100%;
   @include flex-center-start;
   gap: $size-normal;
+  padding: $size-s 0;
 
   &--error {
     display: block;
