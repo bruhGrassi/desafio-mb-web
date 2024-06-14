@@ -1,4 +1,5 @@
 import express from "express";
+import { validateForm } from "../../client/helpers/validations.js";
 
 const router = express.Router();
 
@@ -14,8 +15,19 @@ router.get("/registration", async (_req, res) => {
 });
 
 router.post("/registration", (req, res) => {
-  console.log(req.body);
-  res.status(200).send({ message: "Cadastro com sucesso!", data: req.body });
+  const errors = validateForm(req.body, [
+    "email",
+    "name",
+    "document",
+    "birth_date",
+    "phone",
+    "password",
+  ]);
+  if (!Object.keys(errors).length) {
+    res.status(200).send({ message: "Cadastro com sucesso!", data: req.body });
+  } else {
+    res.status(400).json({ errors });
+  }
 });
 
 export default router;

@@ -2,6 +2,7 @@
 import { ref, reactive, computed, provide } from "vue";
 import Button from "@/components/Button.vue";
 import Header from "@/components/Header.vue";
+import Message from "@/components/Message.vue";
 import Welcome from "@/views/Welcome.vue";
 import EntityInfo from "@/views/EntityInfo.vue";
 import Password from "@/views/Password.vue";
@@ -11,6 +12,8 @@ import { validateForm } from "@/helpers/validations.js";
 const currentStep = ref(0);
 const entity = reactive({});
 const errors = reactive({});
+const isSubmitting = ref(false);
+const isSuccess = ref(false);
 
 const entityTitle = computed(
   () => `Pessoa ${entity.type === "PF" ? "Física" : "Jurídica"}`
@@ -79,16 +82,47 @@ const previousStep = () => {
   }
 };
 
-const submit = () => {
-  if (!validateStep()) return;
+const submit = async () => {
+  isSubmitting.value = true;
 
-  console.log("submit");
+  const response = await fetch("/registration", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(entity),
+  });
+
+  const data = await response.json();
+
+  if (data.errors) {
+    Object.assign(errors, data.errors);
+    return;
+  }
+
+  isSubmitting.value = false;
+  isSuccess.value = true;
+};
+
+const goBack = () => {
+  isRegistered.value = false;
+  currentStep.value = 0;
+  entity = reactive({});
+  errors = reactive({});
 };
 </script>
 
 <template>
   <div class="app__wrapper">
-    <form @clear-errors="clearErrors">
+    <div v-if="isSuccess">
+      <Message
+        text="Seu cadastro foi realizado com sucesso!"
+        @clicked="goBack"
+      />
+    </div>
+
+    <form v-else>
       <Header
         :title="steps[currentStep].title || entityTitle"
         :actualStep="currentStep + 1"
