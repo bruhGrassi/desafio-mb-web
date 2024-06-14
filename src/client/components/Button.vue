@@ -1,16 +1,3 @@
-<template>
-  <button
-    :class="[
-      'button',
-      { 'button--outline': isOutline, 'button--disabled': disabled },
-    ]"
-    :disabled="disabled"
-    @click="handleClick"
-  >
-    {{ text }}
-  </button>
-</template>
-
 <script setup>
 const props = defineProps({
   text: {
@@ -34,6 +21,19 @@ const handleClick = () => {
   emit("action");
 };
 </script>
+
+<template>
+  <button
+    :class="[
+      'button',
+      { 'button--outline': isOutline, 'button--disabled': disabled },
+    ]"
+    :disabled="disabled"
+    @click="handleClick"
+  >
+    {{ text }}
+  </button>
+</template>
 
 <style scoped lang="scss">
 .button {
