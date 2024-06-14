@@ -28,23 +28,27 @@ const updateValue = () => {
 </script>
 
 <template>
-  <input
-    :id="label"
-    type="radio"
-    :name="name"
-    :value="value"
-    @change="updateValue(value)"
-    class="input-radio__control"
-    v-model="inputValue"
-  />
-  <label class="input-radio__label" :for="label">{{ label }}</label>
+  <div class="input-radio__wrapper">
+    <input
+      :id="label"
+      type="radio"
+      :name="name"
+      :value="value"
+      @change="updateValue(value)"
+      class="input-radio__control"
+      v-model="inputValue"
+    />
+    <label class="input-radio__label" :for="label">{{ label }}</label>
+  </div>
 </template>
 
 <style scoped lang="scss">
 .input-radio {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
+  &__wrapper {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+  }
 
   &__label {
     font-family: $font-family;
