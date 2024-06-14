@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 
 const props = defineProps({
   label: {
@@ -20,11 +20,13 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue"]);
+const clearErrors = inject("clearErrors");
 
 const inputValue = ref(props.modelValue);
 const isFocused = ref(false);
 
 const updateValue = (event) => {
+  clearErrors();
   emit("update:modelValue", event.target.value);
 };
 </script>
@@ -85,7 +87,6 @@ const updateValue = (event) => {
     &--text {
       color: $error-color;
       font-size: $size-s;
-      padding-left: $size-xs;
       padding-top: 0.375rem;
     }
   }

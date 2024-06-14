@@ -1,11 +1,12 @@
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, provide } from "vue";
 import Button from "@/components/Button.vue";
 import Header from "@/components/Header.vue";
 import Welcome from "@/views/Welcome.vue";
 import EntityInfo from "@/views/EntityInfo.vue";
 import Password from "@/views/Password.vue";
 import Review from "@/views/Review.vue";
+import { validateForm } from "@/helpers/validations.js";
 
 const currentStep = ref(0);
 const entity = reactive({});
@@ -44,7 +45,29 @@ const steps = [
   },
 ];
 
+const clearErrors = () => {
+  Object.keys(errors).forEach((key) => {
+    delete errors[key];
+  });
+};
+
+provide("clearErrors", clearErrors);
+
+const validateStep = () => {
+  clearErrors();
+  if (currentStep.value <= 3) {
+    Object.assign(
+      errors,
+      validateForm(entity, steps[currentStep.value].requiredFields)
+    );
+  }
+
+  return Object.keys(errors).length === 0;
+};
+
 const nextStep = () => {
+  if (!validateStep()) return;
+
   if (currentStep.value < steps.length - 1) {
     currentStep.value++;
   }
@@ -57,13 +80,15 @@ const previousStep = () => {
 };
 
 const submit = () => {
+  if (!validateStep()) return;
+
   console.log("submit");
 };
 </script>
 
 <template>
   <div class="app__wrapper">
-    <form>
+    <form @clear-errors="clearErrors">
       <Header
         :title="steps[currentStep].title || entityTitle"
         :actualStep="currentStep + 1"

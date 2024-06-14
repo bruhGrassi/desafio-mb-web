@@ -10,35 +10,41 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="input-group">
-    <InputRadio
-      label="Pessoa Fisica"
-      value="PF"
-      name="entity"
-      v-model="radioValue"
-    />
-    <InputRadio
-      label="Pessoa Juridica"
-      value="PJ"
-      name="entity"
-      v-model="radioValue"
-    />
+  <div class="input-group__wrapper">
+    <div class="input-group__fields">
+      <InputRadio
+        label="Pessoa Fisica"
+        value="PF"
+        name="entity"
+        v-model="radioValue"
+      />
+      <InputRadio
+        label="Pessoa Juridica"
+        value="PJ"
+        name="entity"
+        v-model="radioValue"
+      />
+    </div>
+    <span v-if="error" class="input-group--error">{{ error }}</span>
   </div>
-  <span v-if="error" class="input-group--error">{{ error }}</span>
 </template>
 
 <style lang="scss">
 .input-group {
-  width: 100%;
-  @include flex-center-start;
-  gap: $size-normal;
-  padding: $size-s 0;
+  &__wrapper {
+    padding: $size-s 0;
+  }
+
+  &__fields {
+    @include flex-center-start;
+    width: 100%;
+    gap: $size-normal;
+  }
 
   &--error {
     display: block;
     color: $error-color;
     font-size: $size-s;
-    padding-left: $size-xs;
     padding-top: 0.375rem;
   }
 }
