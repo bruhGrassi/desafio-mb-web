@@ -106,7 +106,7 @@ const submit = async () => {
 };
 
 const goBack = () => {
-  isRegistered.value = false;
+  isSuccess.value = false;
   currentStep.value = 0;
   Object.assign(entity, {});
   Object.assign(errors, {});
