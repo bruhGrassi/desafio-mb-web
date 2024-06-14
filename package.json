@@ -10,7 +10,8 @@
     "build": "vite build",
     "prestart": "npm run build",
     "start": "NODE_ENV=production node src/server/index.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "express": "^4.19.2",
