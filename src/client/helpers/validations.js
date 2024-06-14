@@ -104,6 +104,13 @@ export const validationRules = {
   password: (value) => validatePassword(value),
 };
 
+/**
+ * Method that validates an entity based in a set of requiredFields
+ *
+ * @param {Object} entity - the entity to be validate
+ * @param {Array<String>} requiredFields - all the fields to validate
+ * @returns {Object} errors - an object with the errors to each field
+ */
 export function validateForm(entity, requiredFields) {
   const errors = {};
 
